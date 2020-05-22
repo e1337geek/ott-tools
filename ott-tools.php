@@ -5,6 +5,7 @@
  * Version: 0.1.1
  * Author: ByteIT
  * Author URI: https://byteitsystems.com
+ * Text Domain: ottt-tools
  */
 
  require_once( plugin_dir_path( __FILE__ ) . 'ottt-shortcodes.php' );

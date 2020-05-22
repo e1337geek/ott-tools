@@ -2,7 +2,7 @@
 
 function ottt_enroll_customer_shortcode( $atts ) {
     extract(shortcode_atts(array(
-        'employer' => null,
+        'customer_employer' => null,
         'expiration' => null,
     ), $atts));
 
