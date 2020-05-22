@@ -6,3 +6,5 @@
  * Author: ByteIT
  * Author URI: https://byteitsystems.com
  */
+
+ require_once( plugin_dir_path( __FILE__ ) . 'ottt-shortcodes.php' );
