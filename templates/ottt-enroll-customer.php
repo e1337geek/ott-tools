@@ -25,7 +25,7 @@ $customer_email = isset( $_GET['email'] ) ? $_GET['email'] : '';
         <input type="text" id="email" name="email" value="<?php echo $customer_email; ?>"<?php echo(!$customer_email ?: 'readonly'); ?>><br />
 
         <label for="password"><?php _e('Password', 'ottt-tools'); ?></label><br />
-        <input type="text" id="password" name="password"><br />
+        <input type="password" id="password" name="password"><br />
 
         <input type="hidden" name="action" value="ottt_enroll_customer"><br />
         <input type="submit">
