@@ -5,7 +5,7 @@
  * Version: 0.1.1
  * Author: ByteIT
  * Author URI: https://byteitsystems.com
- * Text Domain: ottt-tools
+ * Text Domain: ott-tools
  */
 
  require_once( plugin_dir_path( __FILE__ ) . 'ottt-init.php' );
