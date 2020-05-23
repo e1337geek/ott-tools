@@ -29,10 +29,18 @@ function ottt_enroll_customer_form_handler() {
         'body' => array(
             'name' => $fname . ' ' . $lname,
             'email' => $email,
-            'password' => $password
-            'product' => 'https://api.vhx.tv/products/' . get_option( 'ottt_product_id' );
+            'password' => $password,
+            'product' => 'https://api.vhx.tv/products/' . get_option( 'ottt_product_id' ),
         ),
     ));
+
+    $ottt_customer_details = array(
+        'post_type' => 'ottt_customer',
+        'post_status' => 'published',
+    )
+
+    $ottt_customer_id = wp_insert_post( $ottt_customer_details );
+
 }
 add_action( 'admin_post_nopriv_ottt_enroll_customer', 'ottt_enroll_customer_form_handler' );
 add_action( 'admin_post_ottt_enroll_customer', 'ottt_enroll_customer_form_handler' );

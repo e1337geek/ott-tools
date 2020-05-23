@@ -8,4 +8,4 @@
  * Text Domain: ottt-tools
  */
 
- require_once( plugin_dir_path( __FILE__ ) . 'ottt-shortcodes.php' );
+ require_once( plugin_dir_path( __FILE__ ) . 'ottt-init.php' );
