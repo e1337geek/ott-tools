@@ -2,6 +2,9 @@
 
 function ottt_enroll_customer_form_handler() {
 
+    $ott_success = 0;
+    $ott_error = '';
+
     if ( ! empty( $_POST['_wp_http_referer'] ) ) {
         $form_url = esc_url_raw( wp_unslash( $_POST['_wp_http_referer'] ) );
     } else {
@@ -15,35 +18,41 @@ function ottt_enroll_customer_form_handler() {
     ) {
 
         /* Initialize Variables */
-        $ott_success = 0;
-        $ott_error = '';
         $fname = sanitize_text_field( $_POST['fname'] );
         $lname = sanitize_text_field( $_POST['lname'] );
         $employer = sanitize_text_field( $_POST['employer'] );
         $email = sanitize_email( $_POST['email'] );
         $password = $_POST['password'];
 
-        $url = 'https://api.vhx.tv/customers';
+        if (
+            ( strlen( $fname ) || strlen( $lname ) ) &&
+            strlen( $email ) &&
+            strlen( $password )
+        ) {
 
-        $ott_response = wp_remote_post( $url, array(
-            'method' => 'POST',
-            'headers' => array(
-                'Authorization' => 'Basic ' . base64_encode( get_option( 'ottt_api_key' ) ),
-            ),
-            'body' => array(
-                'name' => $fname . ' ' . $lname,
-                'email' => $email,
-                'password' => $password,
-                'product' => 'https://api.vhx.tv/products/' . get_option( 'ottt_product_id' ),
-            ),
-        ));
+            $url = 'https://api.vhx.tv/customers';
+            $ott_response = wp_remote_post( $url, array(
+                'method' => 'POST',
+                'headers' => array(
+                    'Authorization' => 'Basic ' . base64_encode( get_option( 'ottt_api_key' ) ),
+                ),
+                'body' => array(
+                    'name' => $fname . ' ' . $lname,
+                    'email' => $email,
+                    'password' => $password,
+                    'product' => 'https://api.vhx.tv/products/' . get_option( 'ottt_product_id' ),
+                ),
+            ));
 
-        if( is_wp_error( $ott_response ) ) {
-            $ott_error = 'wp';
-        } elseif ( $ott_response['response']['code'] === 200 ) {
-            $ott_success = 1;
+            if( is_wp_error( $ott_response ) ) {
+                $ott_error = 'wp';
+            } elseif ( $ott_response['response']['code'] === 200 ) {
+                $ott_success = 1;
+            } else {
+                $ott_error = 'ott';
+            }
         } else {
-            $ott_error = 'ott';
+            $ott_error = 'fields';
         }
 
         $ottt_customer_details = array(
@@ -62,31 +71,21 @@ function ottt_enroll_customer_form_handler() {
         );
         $ottt_customer_id = wp_insert_post( $ottt_customer_details );
 
-        wp_safe_redirect(
-            esc_url_raw(
-                add_query_arg( 
-                    array(
-                        'success' => $ott_success,
-                        'error' => $ott_error,
-                    ),
-                    $form_url
-                 )
-            )
-        );
-
     } else {
-        wp_safe_redirect(
-            esc_url_raw(
-                add_query_arg( 
-                    array(
-                        'success' => 0,
-                        'error' => 'fields',
-                    ),
-                    $form_url
-                 )
-            )
-        );
+        $ott_error = 'fields';
     }
+
+    wp_safe_redirect(
+        esc_url_raw(
+            add_query_arg( 
+                array(
+                    'success' => $ott_success,
+                    'ott-error' => $ott_error,
+                ),
+                $form_url
+             )
+        )
+    );
 
 }
 add_action( 'admin_post_nopriv_ottt_enroll_customer', 'ottt_enroll_customer_form_handler' );
