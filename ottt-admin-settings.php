@@ -1,12 +1,12 @@
 <?php
 
 function ottt_settings_init() {
-    register_setting( 'ottt_api_key', 'ottt_settings' );
-    register_setting( 'ottt_product_id', 'ottt_settings' );
+    register_setting( 'ottt_settings', 'ottt_api_key' );
+    register_setting( 'ottt_settings', 'ottt_product_id' );
 
     add_settings_section(
         'ottt_settings_section',
-        'OTT Tools ' . __( 'Settings', 'ott-tools' ),
+        'Vimeo OTT API ' . __( 'Settings', 'ott-tools' ),
         'ottt_settings_section_cb',
         'ottt_settings'
     );
@@ -34,15 +34,18 @@ function ottt_settings_section_cb( $args ) {
 }
 
 function ottt_field_api_key_cb( $args ) {
-
+    $api_key = get_option( 'ottt_api_key' );
+    echo '<input type="text" id="ottt_api_key" name="ottt_api_key" value="' . $api_key . '" />';
 }
 
 function ottt_field_product_id_cb( $args ) {
-
+    $product_id = get_option( 'ottt_product_id' );
+    echo '<input type="text" id="ottt_product_id" name="ottt_product_id" value="' . $product_id . '" />';
 }
 
 function ottt_settings_page() {
-    add_menu_page(
+    add_submenu_page(
+        'edit.php?post_type=ottt_customer',
         'OTT Tools Settings',
         'Settings',
         'manage_options',
@@ -56,7 +59,7 @@ function ottt_settings_template() {
     if ( ! current_user_can( 'manage_options' ) ) {
         return;
     }
-    ob_start;
-    include ( plugin_dir_path( __FILE__ ) . 'templates/admin/ottt-admin-settings.php' );
+    ob_start();
+    include ( plugin_dir_path( __FILE__ ) . 'templates/admin/ottt-settings.php' );
     echo ob_get_clean();
 }

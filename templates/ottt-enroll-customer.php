@@ -27,6 +27,7 @@ $customer_email = isset( $_GET['email'] ) ? $_GET['email'] : '';
         <label for="password"><?php _e('Password', 'ott-tools'); ?></label><br />
         <input type="password" id="password" name="password"><br />
 
+        <?php wp_nonce_field(); ?>
         <input type="hidden" name="action" value="ottt_enroll_customer"><br />
         <input type="submit">
     </form>

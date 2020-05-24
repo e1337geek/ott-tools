@@ -6,7 +6,7 @@ function ottt_enroll_customer_shortcode( $atts ) {
         'expiration' => null,
     ), $atts));
 
-    ob_start;
+    ob_start();
     include ( plugin_dir_path( __FILE__ ) . 'templates/ottt-enroll-customer.php' );
     return ob_get_clean();
 }
