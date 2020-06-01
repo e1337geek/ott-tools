@@ -26,6 +26,7 @@ function ottt_settings_init() {
         'ottt_settings',
         'ottt_settings_section'
     );
+
 }
 add_action( 'admin_init', 'ottt_settings_init' );
 
