@@ -27,6 +27,14 @@ function ottt_settings_init() {
         'ottt_settings_section'
     );
 
+    add_settings_field(
+        'ottt_field_success_redirect',
+        'Redirect on Success',
+        'ottt_field_success_redirect_cb',
+        'ottt_settings',
+        'ottt_settings_section'
+    );
+
 }
 add_action( 'admin_init', 'ottt_settings_init' );
 
@@ -42,6 +50,11 @@ function ottt_field_api_key_cb( $args ) {
 function ottt_field_product_id_cb( $args ) {
     $product_id = get_option( 'ottt_product_id' );
     echo '<input type="text" id="ottt_product_id" name="ottt_product_id" value="' . $product_id . '" />';
+}
+
+function ottt_field_success_redirect_cb( $args ) {
+    $success_redirect = get_option( 'ottt_success_redirect' );
+    echo '<input type="text" id="ottt_success_redirect" name="ottt_success_redirect" value="' . $success_redirect . '" />';
 }
 
 function ottt_settings_page() {
