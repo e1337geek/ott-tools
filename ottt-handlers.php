@@ -75,6 +75,12 @@ function ottt_enroll_customer_form_handler() {
         $ott_error = 'fields';
     }
 
+    if( $ott_success && get_option( 'ottt_success_redirect' ) ) {
+        wp_safe_redirect(
+            esc_url( get_option( 'ottt_success_redirect' ) )
+        );
+    }
+
     wp_safe_redirect(
         esc_url_raw(
             add_query_arg( 

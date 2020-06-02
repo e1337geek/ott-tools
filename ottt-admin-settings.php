@@ -3,6 +3,7 @@
 function ottt_settings_init() {
     register_setting( 'ottt_settings', 'ottt_api_key' );
     register_setting( 'ottt_settings', 'ottt_product_id' );
+    register_setting( 'ottt_settings', 'ottt_success_redirect' );
 
     add_settings_section(
         'ottt_settings_section',
