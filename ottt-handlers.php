@@ -75,23 +75,24 @@ function ottt_enroll_customer_form_handler() {
         $ott_error = 'fields';
     }
 
-    if( $ott_success && get_option( 'ottt_success_redirect' ) ) {
-        wp_safe_redirect(
+    if( $ott_success == '1' && get_option( 'ottt_success_redirect' ) ) {
+        wp_redirect(
             esc_url( get_option( 'ottt_success_redirect' ) )
         );
-    }
+    } else {
 
-    wp_safe_redirect(
-        esc_url_raw(
-            add_query_arg( 
-                array(
-                    'success' => $ott_success,
-                    'ott-error' => $ott_error,
-                ),
-                $form_url
-             )
-        )
-    );
+        wp_safe_redirect(
+            esc_url_raw(
+                add_query_arg( 
+                    array(
+                        'success' => $ott_success,
+                        'ott-error' => $ott_error,
+                    ),
+                    $form_url
+                )
+            )
+        );
+    }
 
 }
 add_action( 'admin_post_nopriv_ottt_enroll_customer', 'ottt_enroll_customer_form_handler' );
