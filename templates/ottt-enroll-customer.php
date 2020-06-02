@@ -13,8 +13,6 @@ $customer_email = isset( $_GET['email'] ) ? $_GET['email'] : '';
 
     <?php elseif( isset( $_GET['success'] ) && $_GET['success'] ): ?>
 
-
-
     <?php else: ?>
 
         <?php if( isset( $_GET['success'] ) && $_GET['success'] === '0' ): ?>
@@ -29,18 +27,18 @@ $customer_email = isset( $_GET['email'] ) ? $_GET['email'] : '';
 
         <form class="ottt-form" action="<?php echo esc_url( admin_url('admin-post.php') ); ?>" method="post">
             <div class="halfcol">
-                <label for="fname"><?php _e('First Name', 'ott-tools'); ?></label>
+                <label for="fname"><?php echo $label_fname; ?></label>
                 <input type="text" id="fname" name="fname" value="<?php echo $customer_fname; ?>"<?php echo(!$customer_fname ?: 'readonly'); ?>>
             </div>
 
             <div class="halfcol">
-                <label for="lname"><?php _e('Last Name', 'ott-tools'); ?></label>
+                <label for="lname"><?php echo $label_lname; ?></label>
                 <input type="text" id="lname" name="lname" value="<?php echo $customer_lname; ?>"<?php echo(!$customer_lname ?: 'readonly'); ?>>
             </div>
 
             <?php if(!$employer): ?>
                 <div class="fullcol">
-                    <label for="employer"><?php _e('Employer', 'ott-tools'); ?></label>
+                    <label for="employer"><?php echo $label_employer ?></label>
                     <input type="text" id="employer" name="employer">
                 </div>
             <?php else: ?>
@@ -48,12 +46,12 @@ $customer_email = isset( $_GET['email'] ) ? $_GET['email'] : '';
             <?php endif; ?>
 
             <div class="fullcol">
-                <label for="email"><?php _e('Email', 'ott-tools'); ?></label>
+                <label for="email"><?php echo $label_email; ?></label>
                 <input type="text" id="email" name="email" value="<?php echo $customer_email; ?>"<?php echo(!$customer_email ?: 'readonly'); ?>>
             </div>
 
             <div class="fullcol">
-                <label for="password"><?php _e('Password', 'ott-tools'); ?></label>
+                <label for="password"><?php echo $label_password; ?></label>
                 <input type="password" id="password" name="password">
             </div>
             
@@ -62,7 +60,7 @@ $customer_email = isset( $_GET['email'] ) ? $_GET['email'] : '';
             <?php endif; ?>
             <?php wp_nonce_field(); ?>
             <input type="hidden" name="action" value="ottt_enroll_customer">
-            <input type="submit">
+            <input type="submit" value="<?php echo $label_submit; ?>">
         </form>
 
     <?php endif; ?>
