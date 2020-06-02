@@ -46,7 +46,7 @@ function ottt_enroll_customer_form_handler() {
 
             if( is_wp_error( $ott_response ) ) {
                 $ott_error = 'wp';
-            } elseif ( $ott_response['response']['code'] === 200 ) {
+            } elseif ( $ott_response['response']['code'] === 200 || $ott_response['response']['code'] === 201 ) {
                 $ott_success = 1;
             } else {
                 $ott_error = 'ott';
