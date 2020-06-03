@@ -45,3 +45,5 @@ function ottt_customer_column( $column, $post_id ) {
         echo get_post_meta( $post_id, 'ottt_customer_employer' , true );
     }
 }
+
+add_filter( 'acf/settings/remove_wp_meta_box', '__return_false' );
