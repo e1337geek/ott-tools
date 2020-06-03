@@ -1,8 +1,9 @@
 <?php
 
-$customer_fname = isset( $_GET['fname'] ) ? $_GET['fname'] : '';
-$customer_lname = isset( $_GET['lname'] ) ? $_GET['lname'] : '';
-$customer_email = isset( $_GET['email'] ) ? $_GET['email'] : '';
+$key = get_post_meta( get_the_ID(), 'ottt_decryption_key', true );
+$customer_fname = isset( $_GET['fname'] ) ? ( $key ? ottt_decrypt_string( $_GET['fname'], $key ) : $_GET['fname'] ) : '';
+$customer_lname = isset( $_GET['lname'] ) ? ( $key ? ottt_decrypt_string( $_GET['lname'], $key ) : $_GET['lname'] ) : '';
+$customer_email = isset( $_GET['email'] ) ? ( $key ? ottt_decrypt_string( $_GET['email'], $key ) : $_GET['email'] ) : '';
 
 ?>
 <div class="ottt-container enroll-customer">
