@@ -1,7 +1,7 @@
 <?php
 
 function ottt_enroll_customer_form_handler() {
-
+    global $wpdb;
     $ott_success = 0;
     $ott_error = '';
 
@@ -48,6 +48,8 @@ function ottt_enroll_customer_form_handler() {
                 $ott_error = 'wp';
             } elseif ( $ott_response['response']['code'] === 200 || $ott_response['response']['code'] === 201 ) {
                 $ott_success = 1;
+                $ottResponseBody = json_decode( $ott_response['body'] );
+                $vhxID = $ottResponseBody['id']);
             } else {
                 $ott_error = 'ott';
             }
@@ -55,21 +57,15 @@ function ottt_enroll_customer_form_handler() {
             $ott_error = 'fields';
         }
 
-        $ottt_customer_details = array(
-            'post_type' => 'ottt_customer',
-            'post_status' => 'private',
-            'comment_status' => 'closed',
-            'ping_status' => 'closed',
-            'meta_input' => array(
-                'ottt_customer_fname' => $fname,
-                'ottt_customer_lname' => $lname,
-                'ottt_customer_email' => $email,
-                'ottt_customer_employer' => $employer,
-                'ottt_customer_success' => $ott_success,
-                'ottt_customer_error' => $ott_error,
-            ),
-        );
-        $ottt_customer_id = wp_insert_post( $ottt_customer_details );
+        $wpdb->insert( 'ottt-customers', array(
+            'ottt_vhx_customer_id' => $vhxID,
+            'ottt_customer_fname' => $fname,
+            'ottt_customer_lname' => $lname,
+            'ottt_customer_email' => $email,
+            'ottt_customer_employer' => $employer,
+            'ottt_customer_success' => $ott_success,
+            'ottt_customer_error' => $ott_error,
+        ) );
 
     } else {
         $ott_error = 'fields';
@@ -102,8 +98,6 @@ function ottt_activity_report_form_handler() {
     global $wpdb;
     $lookerTable = 'ottt-looker-report';
 
-    echo "<h3>" . var_dump( $_FILES ) . "</h3";
-
     if( isset( $_POST['activity_import'] ) ) {
         $extension = pathinfo( $_FILES['looker_report']['name'], PATHINFO_EXTENSION );
 
@@ -129,7 +123,7 @@ function ottt_activity_report_form_handler() {
             $lookerReportCSV = fopen( $_FILES['looker_report']['tmp_name'], 'r' );
             fgetcsv( $lookerReportCSV );
 
-            while( ( $csvData = fgetcsv( $lookerReportCSV ) ) !== FALSE ) {
+            while( ( $csvData = fgetcsv( $lookerReportCSV ) ) !== FALSE ){
                 $csvData = array_map( "utf8_encode", $csvData );
                 $dataLen = count( $csvData );
 
@@ -142,27 +136,60 @@ function ottt_activity_report_form_handler() {
                 $platform = trim( $csvData[4] );
                 $startDate = trim( $csvData[5] );
                 $minWatched = trim( $csvData[6] );
-            }
 
-            if( !empty( $email ) ) {
+                if( !empty( $email ) ) {
                 
-                $wpdb->insert( $lookerTable, array(
-                    'user_id' => $userID,
-                    'email' => $email,
-                    'video_id' => $videoID,
-                    'title' => $title,
-                    'platform' => $platform,
-                    'start_date' => $startDate,
-                    'min_watched' => $minWatched,
-                ) );
-
-                if( $wpdb->insert_id > 0 ) {
-                    $totalInserted++;
+                    $wpdb->insert( $lookerTable, array(
+                        'user_id' => $userID,
+                        'email' => $email,
+                        'video_id' => $videoID,
+                        'title' => $title,
+                        'platform' => $platform,
+                        'start_date' => $startDate,
+                        'min_watched' => $minWatched,
+                    ) );
+    
+                    if( $wpdb->insert_id > 0 ) {
+                        $totalInserted++;
+                    }
+    
                 }
-
             }
 
-            echo "<h3 style='color: green;'>Total Lines : ".$totalInserted."</h3>";
+            $activityReportSQL = "SELECT DISTINCT c.ottt_customer_fname, c.ottt_customer_lname, c.ottt_customer_email, c.ottt_customer_employer, a.user_id, a.video_id, a.title, a.platform, a.start_date, a.min_watched
+            FROM `ottt-customers` c
+            LEFT JOIN `ottt-looker-report` a
+                ON c.ottt_customer_email = a.email;";
+
+            $filename = 'ottt-activity-report';
+            $date = date("Y-m-d H:i:s");
+            $output = fopen('php://output', 'w');
+            $result = $wpdb->get_results($activityReportSQL, ARRAY_A);
+            fputcsv( $output, array('First Name', 'Last Name', 'Email', 'Source','User ID', 'Video ID', 'Video Title', 'Platform', 'Date', 'Min Watched'));
+            
+            foreach ( $result as $key => $value ) {
+                $modified_values = array(
+                    $value['ottt_customer_fname'],
+                    $value['ottt_customer_lname'],
+                    $value['ottt_customer_email'],
+                    $value['ottt_customer_employer'],
+                    $value['user_id'],
+                    $value['video_id'],
+                    $value['title'],
+                    $value['platform'],
+                    $value['start_date'],
+                    $value['min_watched'],
+                );
+                fputcsv( $output, $modified_values );
+            }
+            
+            header("Pragma: public");
+            header("Expires: 0");
+            header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+            header("Cache-Control: private", false);
+            header('Content-Type: text/csv; charset=utf-8');
+            header("Content-Disposition: attachment; filename=\"" . $filename . " " . $date . ".csv\";" );
+            header("Content-Transfer-Encoding: binary");exit;
 
         } else {
             echo "<h3 style='color: red;'>Invalid Extension</h3>";
