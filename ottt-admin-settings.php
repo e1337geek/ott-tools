@@ -78,3 +78,24 @@ function ottt_settings_template() {
     include ( plugin_dir_path( __FILE__ ) . 'templates/admin/ottt-settings.php' );
     echo ob_get_clean();
 }
+
+function ottt_activity_page() {
+    add_submenu_page(
+        'edit.php?post_type=ottt_customer',
+        'OTT Activity Report',
+        'Activity Report',
+        'manage_options',
+        'ottt_activity',
+        'ottt_activity_template'
+    );
+}
+add_action( 'admin_menu', 'ottt_activity_page' );
+
+function ottt_activity_template() {
+    if ( ! current_user_can( 'manage_options' ) ) {
+        return;
+    }
+    ob_start();
+    include ( plugin_dir_path( __FILE__ ) . 'templates/admin/ottt-activity-report.php' );
+    echo ob_get_clean();
+}
