@@ -5,6 +5,7 @@ $customer_fname = isset( $_GET['fname'] ) ? ( $key ? ottt_decrypt_string( $_GET[
 $customer_lname = isset( $_GET['lname'] ) ? ( $key ? ottt_decrypt_string( $_GET['lname'], $key ) : $_GET['lname'] ) : '';
 $customer_email = isset( $_GET['email'] ) ? ( $key ? ottt_decrypt_string( $_GET['email'], $key ) : $_GET['email'] ) : '';
 
+if( !$key || ( $key && ( $customer_fname && $customer_lname && $customer_email ) ) ):
 ?>
 <div class="ottt-container enroll-customer">
 
@@ -67,3 +68,5 @@ $customer_email = isset( $_GET['email'] ) ? ( $key ? ottt_decrypt_string( $_GET[
     <?php endif; ?>
 
 </div>
+
+<?php endif; ?>
