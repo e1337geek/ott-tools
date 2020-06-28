@@ -59,8 +59,16 @@ function ottt_field_success_redirect_cb( $args ) {
 }
 
 function ottt_settings_page() {
+    add_menu_page(
+        'OTT Customers',
+        'OTT Customers',
+        'manage_options',
+        'ottt_customers',
+        'ottt_customers_template',
+        'dashicons-groups'
+    );
     add_submenu_page(
-        'edit.php?post_type=ottt_customer',
+        'ottt_customers',
         'OTT Tools Settings',
         'Settings',
         'manage_options',
@@ -69,6 +77,15 @@ function ottt_settings_page() {
     );
 }
 add_action( 'admin_menu', 'ottt_settings_page' );
+
+function ottt_customers_template() {
+    if ( ! current_user_can( 'manage_options' ) ) {
+        return;
+    }
+    ob_start();
+    include ( plugin_dir_path( __FILE__ ) . 'templates/admin/ottt-settings.php' );
+    echo ob_get_clean();
+}
 
 function ottt_settings_template() {
     if ( ! current_user_can( 'manage_options' ) ) {
@@ -81,7 +98,7 @@ function ottt_settings_template() {
 
 function ottt_activity_page() {
     add_submenu_page(
-        'edit.php?post_type=ottt_customer',
+        'ottt_customers',
         'OTT Activity Report',
         'Activity Report',
         'manage_options',

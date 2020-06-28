@@ -3,6 +3,7 @@ require_once( plugin_dir_path( __FILE__ ) . 'ottt-handlers.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'ottt-shortcodes.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'ottt-admin-settings.php' );
 
+/*
 add_action( 'init', 'create_ottt_customer' );
 function create_ottt_customer() {
     register_post_type( 'ottt_customer' , array(
@@ -45,24 +46,6 @@ function ottt_customer_column( $column, $post_id ) {
         echo get_post_meta( $post_id, 'ottt_customer_employer' , true );
     }
 }
-
-function ottt_create_customers_table() {
-    global $wpdb;
-    $customersTable = 'ottt-customers'
-    $charset_collate = $wpdb->get_charset_collate();
-    $createSQL = "CREATE TABLE IF NOT EXISTS `$customersTable` (
-        customer_id int UNSIGNED NOT NULL AUTO_INCREMENT,
-        ottt_vhx_customer_id int UNSIGNED,
-        ottt_customer_fname varchar(50),
-        ottt_customer_lname varchar(50),
-        ottt_customer_email varchar(70),
-        ottt_customer_source varchar(70),
-        ottt_customer_success smallint,
-        ottt_customer_error varchar(20),
-        PRIMARY KEY (customer_id)
-        ) $charset_collate;";
-    require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-    dbDelta( $createSQL );
-}
+*/
 
 add_filter( 'acf/settings/remove_wp_meta_box', '__return_false' );

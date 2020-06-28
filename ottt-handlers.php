@@ -48,8 +48,8 @@ function ottt_enroll_customer_form_handler() {
                 $ott_error = 'wp';
             } elseif ( $ott_response['response']['code'] === 200 || $ott_response['response']['code'] === 201 ) {
                 $ott_success = 1;
-                $ottResponseBody = json_decode( $ott_response['body'] );
-                $vhxID = $ottResponseBody['id']);
+                $ottResponseBody = json_decode( $ott_response['body'], true );
+                $vhxID = $ottResponseBody['id'];
             } else {
                 $ott_error = 'ott';
             }
@@ -57,12 +57,12 @@ function ottt_enroll_customer_form_handler() {
             $ott_error = 'fields';
         }
 
-        $wpdb->insert( 'ottt-customers', array(
+        $wpdb->insert( 'ottt_customers', array(
             'ottt_vhx_customer_id' => $vhxID,
             'ottt_customer_fname' => $fname,
             'ottt_customer_lname' => $lname,
             'ottt_customer_email' => $email,
-            'ottt_customer_employer' => $employer,
+            'ottt_customer_source' => $employer,
             'ottt_customer_success' => $ott_success,
             'ottt_customer_error' => $ott_error,
         ) );
@@ -96,7 +96,7 @@ add_action( 'admin_post_ottt_enroll_customer', 'ottt_enroll_customer_form_handle
 
 function ottt_activity_report_form_handler() {
     global $wpdb;
-    $lookerTable = 'ottt-looker-report';
+    $lookerTable = 'ottt_looker_report';
 
     if( isset( $_POST['activity_import'] ) ) {
         $extension = pathinfo( $_FILES['looker_report']['name'], PATHINFO_EXTENSION );
@@ -156,9 +156,9 @@ function ottt_activity_report_form_handler() {
                 }
             }
 
-            $activityReportSQL = "SELECT DISTINCT c.ottt_customer_fname, c.ottt_customer_lname, c.ottt_customer_email, c.ottt_customer_employer, a.user_id, a.video_id, a.title, a.platform, a.start_date, a.min_watched
-            FROM `ottt-customers` c
-            LEFT JOIN `ottt-looker-report` a
+            $activityReportSQL = "SELECT DISTINCT c.ottt_customer_fname, c.ottt_customer_lname, c.ottt_customer_email, c.ottt_customer_source, a.user_id, a.video_id, a.title, a.platform, a.start_date, a.min_watched
+            FROM `ottt_customers` c
+            LEFT JOIN `ottt_looker_report` a
                 ON c.ottt_customer_email = a.email;";
 
             $filename = 'ottt-activity-report';
