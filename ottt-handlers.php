@@ -199,3 +199,26 @@ function ottt_activity_report_form_handler() {
 }
 
 add_action( 'admin_post_ottt_activity_report', 'ottt_activity_report_form_handler' );
+
+function ottt_get_customer_source( WP_REST_Request $request ) {
+    global $wpdb;
+	$email = $request['email'];
+    if( is_email( $email ) ) {
+        $getCustomersSQL = "SELECT * FROM `ottt_customers` WHERE `ottt_customer_email` = '$email';";
+        $result = $wpdb->get_row( $getCustomersSQL );
+
+        if( empty( $result ) ) {
+            return false;
+        }
+
+        return $result->ottt_customer_source;
+    }
+    return false;
+}
+
+add_action( 'rest_api_init', function () {
+    register_rest_route( 'ottt/v1', '/customers', array(
+        'methods' => 'GET',
+        'callback' => 'ottt_get_customer_source',
+    ) );
+} );

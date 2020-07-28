@@ -2,7 +2,7 @@
 /**
  * Plugin Name: ByteIT OTT Tools
  * Description: A set of tools to assist in integrating with the Vimeo OTT API
- * Version: 1.0.2
+ * Version: 2.1.1
  * Author: ByteIT
  * Author URI: https://byteitsystems.com
  * Text Domain: ott-tools
