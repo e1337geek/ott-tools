@@ -2,7 +2,7 @@
 
 global $wpdb;
 $customerTable = 'ottt_customers';
-$getCustomersSQL = "SELECT * FROM `$customerTable` ORDER BY `customer_id` DESC";
+$getCustomersSQL = "SELECT * FROM `$customerTable` ORDER BY `customer_id` DESC LIMIT 200;";
 $customers = $wpdb->get_results( $getCustomersSQL, 'ARRAY_A' );
 
 ?>

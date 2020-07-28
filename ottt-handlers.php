@@ -158,7 +158,7 @@ function ottt_activity_report_form_handler() {
 
             $activityReportSQL = "SELECT DISTINCT c.ottt_customer_fname, c.ottt_customer_lname, c.ottt_customer_email, c.ottt_customer_source, a.user_id, a.video_id, a.title, a.platform, a.start_date, a.min_watched
             FROM `ottt_customers` c
-            LEFT JOIN `ottt_looker_report` a
+            INNER JOIN `ottt_looker_report` a
                 ON c.ottt_customer_email = a.email;";
 
             $filename = 'ottt-activity-report';
@@ -172,7 +172,7 @@ function ottt_activity_report_form_handler() {
                     $value['ottt_customer_fname'],
                     $value['ottt_customer_lname'],
                     $value['ottt_customer_email'],
-                    $value['ottt_customer_employer'],
+                    $value['ottt_customer_source'],
                     $value['user_id'],
                     $value['video_id'],
                     $value['title'],
