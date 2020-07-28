@@ -217,7 +217,7 @@ function ottt_get_customer_source( WP_REST_Request $request ) {
 }
 
 add_action( 'rest_api_init', function () {
-    register_rest_route( 'ottt/v1', '/customers', array(
+    register_rest_route( 'ottt/v1', '/getCustomerSource', array(
         'methods' => 'GET',
         'callback' => 'ottt_get_customer_source',
     ) );
