@@ -65,7 +65,7 @@ function ottt_enroll_customer_form_handler() {
             'ottt_customer_source' => $employer,
             'ottt_customer_success' => $ott_success,
             'ottt_customer_error' => $ott_error,
-            'ottt_customer_last_viewed' => null,
+            'ottt_customer_last_viewed' => time(),
             'ottt_customer_disabled' => null,
         ) );
 
