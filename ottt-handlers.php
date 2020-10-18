@@ -202,7 +202,8 @@ add_action( 'admin_post_ottt_activity_report', 'ottt_activity_report_form_handle
 
 function ottt_get_customer_source( WP_REST_Request $request ) {
     global $wpdb;
-	$email = $request['email'];
+    $email = $request['email'];
+    $response = new WP_REST_Response();
     if( is_email( $email ) ) {
         $getCustomersSQL = "SELECT * FROM `ottt_customers` WHERE `ottt_customer_email` = '$email';";
         $result = $wpdb->get_row( $getCustomersSQL );

@@ -145,7 +145,7 @@ class OTTT_Customers_List extends WP_List_Table {
         $sql .= " LIMIT $per_page";
         $sql .= ' OFFSET ' . ( $page_number - 1 ) * $per_page;
       
-        $result = $wpdb->get_results( $sql, 'ARRAY_A' );
+        g
         return $result;
     }
 
