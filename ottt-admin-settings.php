@@ -69,6 +69,22 @@ function ottt_settings_page() {
     );
     add_submenu_page(
         'ottt_customers',
+        'OTT Activity Report',
+        'Activity Report',
+        'manage_options',
+        'ottt_activity',
+        'ottt_activity_template'
+    );
+    add_submenu_page(
+        'ottt_customers',
+        'OTT Disable Inactive',
+        'Disable Inactive',
+        'manage_options',
+        'ottt_disable_inactive',
+        'ottt_disable_inactive_template'
+    );
+    add_submenu_page(
+        'ottt_customers',
         'OTT Tools Settings',
         'Settings',
         'manage_options',
@@ -88,33 +104,30 @@ function ottt_customers_template() {
     echo ob_get_clean();
 }
 
-function ottt_settings_template() {
-    if ( ! current_user_can( 'manage_options' ) ) {
-        return;
-    }
-    ob_start();
-    include ( plugin_dir_path( __FILE__ ) . 'templates/admin/ottt-settings.php' );
-    echo ob_get_clean();
-}
-
-function ottt_activity_page() {
-    add_submenu_page(
-        'ottt_customers',
-        'OTT Activity Report',
-        'Activity Report',
-        'manage_options',
-        'ottt_activity',
-        'ottt_activity_template'
-    );
-}
-add_action( 'admin_menu', 'ottt_activity_page' );
-
 function ottt_activity_template() {
     if ( ! current_user_can( 'manage_options' ) ) {
         return;
     }
     ob_start();
     include ( plugin_dir_path( __FILE__ ) . 'templates/admin/ottt-activity-report.php' );
+    echo ob_get_clean();
+}
+
+function ottt_disable_inactive_template() {
+    if ( ! current_user_can( 'manage_options' ) ) {
+        return;
+    }
+    ob_start();
+    include ( plugin_dir_path( __FILE__ ) . 'templates/admin/ottt-disable-inactive.php' );
+    echo ob_get_clean();
+}
+
+function ottt_settings_template() {
+    if ( ! current_user_can( 'manage_options' ) ) {
+        return;
+    }
+    ob_start();
+    include ( plugin_dir_path( __FILE__ ) . 'templates/admin/ottt-settings.php' );
     echo ob_get_clean();
 }
 
