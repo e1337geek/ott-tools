@@ -32,7 +32,7 @@ $customers = $wpdb->get_results( $getCustomersSQL, 'ARRAY_A' );
             <?php
 
             if( $customer['ottt_customer_last_viewed'] > 0 ) {
-                $customer_last_viewed = gmdate("Y-m-d", $customer['ottt_customer_last_viewed'];
+                $customer_last_viewed = gmdate("Y-m-d", $customer['ottt_customer_last_viewed']);
             } else {
                 $customer_last_viewed = '';
             }
