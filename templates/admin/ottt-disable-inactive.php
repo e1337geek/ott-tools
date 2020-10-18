@@ -37,8 +37,8 @@ $customers = $wpdb->get_results( $getCustomersSQL, 'ARRAY_A' );
                 <td><?php echo $customer['ottt_customer_source']?></td>
                 <td><?php echo $customer['ottt_customer_success']?></td>
                 <td><?php echo $customer['ottt_customer_error']?></td>
-                <td><?php echo $customer['ottt_customer_last_viewed']?></td>
-                <td><?php echo $customer['ottt_customer_disabled']?></td>
+                <td><?php echo gmdate("Y-m-d\TH:i:s\Z", $customer['ottt_customer_last_viewed'])?></td>
+                <td><?php echo gmdate("Y-m-d\TH:i:s\Z", $customer['ottt_customer_disabled'])?></td>
             </tr>
 
             <?php endforeach; ?>
