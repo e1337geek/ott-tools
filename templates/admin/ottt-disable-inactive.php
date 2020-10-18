@@ -2,7 +2,10 @@
 
 global $wpdb;
 $customerTable = 'ottt_customers_220';
-$getCustomersSQL = "SELECT * FROM `$customerTable` ORDER BY `customer_id` DESC LIMIT 200;";
+$currentTimestamp = time();
+$gracePeriodSec = 2419200;
+$minLastViewed = $currentTimestamp - $gracePeriodSec;
+$getCustomersSQL = "SELECT * FROM `$customerTable` WHERE `ottt_customer_last_viewed` < $minLastViewed ORDER BY `ottt_customer_last_viewed` ASC;";
 $customers = $wpdb->get_results( $getCustomersSQL, 'ARRAY_A' );
 
 ?>
