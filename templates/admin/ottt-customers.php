@@ -8,7 +8,7 @@ $customers = $wpdb->get_results( $getCustomersSQL, 'ARRAY_A' );
 ?>
 
 <div class="wrap">
-    <h2>OTT Customers</h2>
+    <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 
     <div id="poststuff">
         <table style="min-width: 50%;">
