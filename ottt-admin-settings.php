@@ -152,7 +152,7 @@ class OTTT_Customers_List extends WP_List_Table {
     public static function delete_customer( $id ) {
         //This is where we will disable the customer in VHX
         global $wpdb;
-        $sql = "SELECT * FROM ottt_customers_220 WHERE "
+        $sql = "SELECT * FROM ottt_customers_220 WHERE ";
     }
 
     public static function record_count() {
