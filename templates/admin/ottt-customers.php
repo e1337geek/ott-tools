@@ -26,6 +26,19 @@ $customers = $wpdb->get_results( $getCustomersSQL, 'ARRAY_A' );
 
             <?php foreach( $customers as $customer ): ?>
 
+            <?php
+            if( $customer['ottt_customer_last_viewed'] > 0 ) {
+                $customer_last_viewed = gmdate("Y-m-d", $customer['ottt_customer_last_viewed']);
+            } else {
+                $customer_last_viewed = '';
+            }
+            if( $customer['ottt_customer_disabled'] > 0 ) {
+                $customer_disabled = gmdate("Y-m-d", $customer['ottt_customer_disabled']);
+            } else {
+                $customer_disabled = '';
+            }
+            ?>
+
             <tr>
                 <td><?php echo $customer['ottt_vhx_customer_id']?></td>
                 <td><?php echo $customer['ottt_customer_fname']?></td>
@@ -34,8 +47,8 @@ $customers = $wpdb->get_results( $getCustomersSQL, 'ARRAY_A' );
                 <td><?php echo $customer['ottt_customer_source']?></td>
                 <td><?php echo $customer['ottt_customer_success']?></td>
                 <td><?php echo $customer['ottt_customer_error']?></td>
-                <td><?php echo gmdate("Y-m-d", $customer['ottt_customer_last_viewed'])?></td>
-                <td><?php echo gmdate("Y-m-d", $customer['ottt_customer_disabled'])?></td>
+                <td><?php echo $customer_last_viewed ?></td>
+                <td><?php echo $customer_disabled ?></td>
             </tr>
 
             <?php endforeach; ?>
