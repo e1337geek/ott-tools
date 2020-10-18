@@ -21,8 +21,8 @@ function ottt_activate() {
         ottt_customer_source varchar(70),
         ottt_customer_success smallint,
         ottt_customer_error varchar(20),
-        ottt_customer_last_viewed date,
-        ottt_customer_disabled date,
+        ottt_customer_last_viewed int UNSIGNED,
+        ottt_customer_disabled int UNSIGNED,
         PRIMARY KEY (customer_id)
         ) $charset_collate;";
     require_once ABSPATH . 'wp-admin/includes/upgrade.php';
