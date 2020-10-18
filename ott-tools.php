@@ -2,7 +2,7 @@
 /**
  * Plugin Name: ByteIT OTT Tools
  * Description: A set of tools to assist in integrating with the Vimeo OTT API
- * Version: 2.1.1
+ * Version: 2.2.0
  * Author: ByteIT
  * Author URI: https://byteitsystems.com
  * Text Domain: ott-tools
@@ -10,7 +10,7 @@
 
 function ottt_activate() {
     global $wpdb;
-    $customersTable = 'ottt_customers';
+    $customersTable = 'ottt_customers_220';
     $charset_collate = $wpdb->get_charset_collate();
     $createSQL = "CREATE TABLE IF NOT EXISTS `$customersTable` (
         customer_id int UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -21,6 +21,8 @@ function ottt_activate() {
         ottt_customer_source varchar(70),
         ottt_customer_success smallint,
         ottt_customer_error varchar(20),
+        ottt_customer_last_viewed date,
+        ottt_customer_disabled date,
         PRIMARY KEY (customer_id)
         ) $charset_collate;";
     require_once ABSPATH . 'wp-admin/includes/upgrade.php';

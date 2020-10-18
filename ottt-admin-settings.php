@@ -135,7 +135,7 @@ class OTTT_Customers_List extends WP_List_Table {
     public static function get_customers( $per_page = 5, $page_number = 1 ) {
 
         global $wpdb;
-        $sql = "SELECT * FROM ottt_customers";
+        $sql = "SELECT * FROM ottt_customers_220";
       
         if ( ! empty( $_REQUEST['orderby'] ) ) {
           $sql .= ' ORDER BY ' . esc_sql( $_REQUEST['orderby'] );
@@ -151,11 +151,13 @@ class OTTT_Customers_List extends WP_List_Table {
 
     public static function delete_customer( $id ) {
         //This is where we will disable the customer in VHX
+        global $wpdb;
+        $sql = "SELECT * FROM ottt_customers_220 WHERE "
     }
 
     public static function record_count() {
         global $wpdb;
-        $sql = "SELECT COUNT(*) FROM ottt_customers";
+        $sql = "SELECT COUNT(*) FROM ottt_customers_220";
         return $wpdb->get_var( $sql );
     }
 

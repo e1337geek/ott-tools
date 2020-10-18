@@ -57,7 +57,7 @@ function ottt_enroll_customer_form_handler() {
             $ott_error = 'fields';
         }
 
-        $wpdb->insert( 'ottt_customers', array(
+        $wpdb->insert( 'ottt_customers_220', array(
             'ottt_vhx_customer_id' => $vhxID,
             'ottt_customer_fname' => $fname,
             'ottt_customer_lname' => $lname,
@@ -65,6 +65,8 @@ function ottt_enroll_customer_form_handler() {
             'ottt_customer_source' => $employer,
             'ottt_customer_success' => $ott_success,
             'ottt_customer_error' => $ott_error,
+            'ottt_customer_last_viewed' => null,
+            'ottt_customer_disabled' => null,
         ) );
 
     } else {
@@ -157,7 +159,7 @@ function ottt_activity_report_form_handler() {
             }
 
             $activityReportSQL = "SELECT DISTINCT c.ottt_customer_fname, c.ottt_customer_lname, c.ottt_customer_email, c.ottt_customer_source, a.user_id, a.video_id, a.title, a.platform, a.start_date, a.min_watched
-            FROM `ottt_customers` c
+            FROM `ottt_customers_220` c
             INNER JOIN `ottt_looker_report` a
                 ON c.ottt_customer_email = a.email;";
 
@@ -205,7 +207,7 @@ function ottt_get_customer_source( WP_REST_Request $request ) {
     $email = $request['email'];
     $response = new WP_REST_Response();
     if( is_email( $email ) ) {
-        $getCustomersSQL = "SELECT * FROM `ottt_customers` WHERE `ottt_customer_email` = '$email';";
+        $getCustomersSQL = "SELECT * FROM `ottt_customers_220` WHERE `ottt_customer_email` = '$email';";
         $result = $wpdb->get_row( $getCustomersSQL );
 
         if( empty( $result ) ) {
