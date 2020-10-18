@@ -207,7 +207,6 @@ function ottt_update_last_viewed ( $customer_email, $start_date ) {
     $formattedDate = strtotime( $start_date );
     $sql = "UPDATE `$customersTable` SET `ottt_customer_last_viewed` = $formattedDate WHERE `ottt_customer_email` = '$customer_email' AND `ottt_customer_last_viewed` < $formattedDate;";
     require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-    //error_log(print_r($sql,true));
     dbDelta( $sql );
 }
 

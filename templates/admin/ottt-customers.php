@@ -20,6 +20,8 @@ $customers = $wpdb->get_results( $getCustomersSQL, 'ARRAY_A' );
                 <th style="text-align: left;">Source</th>
                 <th style="text-align: left;">Success</th>
                 <th style="text-align: left;">Error</th>
+                <th style="text-align: left;">Last Viewed</th>
+                <th style="text-align: left;">Disabled</th>                
             </tr>
 
             <?php foreach( $customers as $customer ): ?>
@@ -32,6 +34,8 @@ $customers = $wpdb->get_results( $getCustomersSQL, 'ARRAY_A' );
                 <td><?php echo $customer['ottt_customer_source']?></td>
                 <td><?php echo $customer['ottt_customer_success']?></td>
                 <td><?php echo $customer['ottt_customer_error']?></td>
+                <td><?php echo $customer['ottt_customer_last_viewed']?></td>
+                <td><?php echo $customer['ottt_customer_disabled']?></td>
             </tr>
 
             <?php endforeach; ?>
