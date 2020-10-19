@@ -212,8 +212,6 @@ function ottt_update_last_viewed ( $customer_email, $start_date ) {
 }
 
 function ottt_disable_inactive_form_handler() {
-    
-    error_log(print_r("Hello World",true));
 
     global $wpdb;
     $customerTable = "ottt_customers_220";
@@ -222,8 +220,12 @@ function ottt_disable_inactive_form_handler() {
     $minLastViewed = $currentTimestamp - $gracePeriodSec;
     $sqlSelInactive = "SELECT * FROM `$customerTable` WHERE `ottt_customer_last_viewed` < $minLastViewed;";
     $customers = $wpdb->get_results( $sqlSelInactive, 'ARRAY_A' );
-
+    error_log(print_r($customers,true));
+    
     foreach ( $customers as $customer ) { 
+
+        error_log(print_r($customer,true));
+
         $disableResult = ottt_disable_customer( $customer );
         if( $disableResult['response']['code'] === 200 || $disableResult['response']['code'] === 201 ) {
             $sqlUpdateDisabled = "UPDATE `$customerTable` SET `ottt_customer_disabled` = $currentTimestamp WHERE `ottt_customer_email` = '$customer_email'";
