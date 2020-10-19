@@ -224,7 +224,6 @@ function ottt_disable_inactive_form_handler() {
     foreach ( $customers as $customer ) { 
 
         $disableResult = ottt_disable_customer( $customer );
-        error_log(print_r(var_dump($disableResult),true));
         if( $disableResult['response']['code'] === 200 || $disableResult['response']['code'] === 201 ) {
             $sqlUpdateDisabled = "UPDATE `$customerTable` SET `ottt_customer_disabled` = $currentTimestamp WHERE `ottt_customer_email` = '$customer_email'";
             require_once ABSPATH . 'wp-admin/includes/upgrade.php';
@@ -237,7 +236,7 @@ add_action( 'admin_post_ottt_disable_inactive', 'ottt_disable_inactive_form_hand
 
 function ottt_disable_customer ( $customer ) {
 
-    if ( $customer['ott_customer_vhx_id'] ) {
+    if ( $customer['[ottt_vhx_customer_id'] ) {
         $url = 'https://api.vhx.tv/customers/' . $customer['ott_customer_vhx_id'] . '/products';
         $ott_response = wp_remote_post( $url, array(
             'method' => 'DELETE',
