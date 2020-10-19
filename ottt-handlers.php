@@ -57,7 +57,7 @@ function ottt_enroll_customer_form_handler() {
             $ott_error = 'fields';
         }
 
-        $wpdb->insert( 'ottt_customers_220', array(
+        $wpdb->insert( 'ottt_customers', array(
             'ottt_vhx_customer_id' => $vhxID,
             'ottt_customer_fname' => $fname,
             'ottt_customer_lname' => $lname,
@@ -159,7 +159,7 @@ function ottt_activity_report_form_handler() {
             }
 
             $activityReportSQL = "SELECT DISTINCT c.ottt_customer_fname, c.ottt_customer_lname, c.ottt_customer_email, c.ottt_customer_source, a.user_id, a.video_id, a.title, a.platform, a.start_date, a.min_watched
-            FROM `ottt_customers_220` c
+            FROM `ottt_customers` c
             INNER JOIN `ottt_looker_report` a
                 ON c.ottt_customer_email = a.email;";
 
@@ -204,7 +204,7 @@ add_action( 'admin_post_ottt_activity_report', 'ottt_activity_report_form_handle
 
 function ottt_update_last_viewed ( $customer_email, $start_date ) {
     global $wpdb;
-    $customersTable = "ottt_customers_220";
+    $customersTable = "ottt_customers";
     $formattedDate = strtotime( $start_date );
     $sql = "UPDATE `$customersTable` SET `ottt_customer_last_viewed` = $formattedDate WHERE `ottt_customer_email` = '$customer_email' AND `ottt_customer_last_viewed` < $formattedDate;";
     require_once ABSPATH . 'wp-admin/includes/upgrade.php';
@@ -214,7 +214,7 @@ function ottt_update_last_viewed ( $customer_email, $start_date ) {
 function ottt_disable_inactive_form_handler() {
 
     global $wpdb;
-    $customerTable = "ottt_customers_220";
+    $customerTable = "ottt_customers";
     $currentTimestamp = time();
     $gracePeriodSec = 2419200;
     $minLastViewed = $currentTimestamp - $gracePeriodSec;
@@ -259,7 +259,7 @@ function ottt_get_customer_source( WP_REST_Request $request ) {
     $email = $request['email'];
     $response = new WP_REST_Response();
     if( is_email( $email ) ) {
-        $getCustomersSQL = "SELECT * FROM `ottt_customers_220` WHERE `ottt_customer_email` = '$email';";
+        $getCustomersSQL = "SELECT * FROM `ottt_customers` WHERE `ottt_customer_email` = '$email';";
         $result = $wpdb->get_row( $getCustomersSQL );
 
         if( empty( $result ) ) {
