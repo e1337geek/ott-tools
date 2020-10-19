@@ -212,6 +212,8 @@ function ottt_update_last_viewed ( $customer_email, $start_date ) {
 }
 
 function ottt_disable_inactive_form_handler() {
+    
+    error_log(print_r("Hello World",true));
 
     global $wpdb;
     $customerTable = "ottt_customers_220";
