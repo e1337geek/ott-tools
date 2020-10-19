@@ -97,6 +97,7 @@ add_action( 'admin_post_nopriv_ottt_enroll_customer', 'ottt_enroll_customer_form
 add_action( 'admin_post_ottt_enroll_customer', 'ottt_enroll_customer_form_handler' );
 
 function ottt_activity_report_form_handler() {
+    error_log(print_r("Hello World",true));
     global $wpdb;
     $lookerTable = 'ottt_looker_report';
 
@@ -170,7 +171,6 @@ function ottt_activity_report_form_handler() {
             fputcsv( $output, array('First Name', 'Last Name', 'Email', 'Source','User ID', 'Video ID', 'Video Title', 'Platform', 'Date', 'Min Watched'));
             
             foreach ( $result as $key => $value ) {
-                error_log(print_r("Hello World",true));
                 ottt_update_last_viewed( $value['ottt_customer_email'], $value['start_date'] );
                 $modified_values = array(
                     $value['ottt_customer_fname'],
