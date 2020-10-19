@@ -1,7 +1,7 @@
 <?php
 
 global $wpdb;
-$customerTable = 'ottt_customers_220';
+$customerTable = 'ottt_customers';
 $currentTimestamp = time();
 $gracePeriodSec = 2419200;
 $minLastViewed = $currentTimestamp - $gracePeriodSec;

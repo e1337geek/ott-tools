@@ -1,7 +1,7 @@
 <?php
 
 global $wpdb;
-$customerTable = 'ottt_customers_220';
+$customerTable = 'ottt_customers';
 $getCustomersSQL = "SELECT * FROM `$customerTable` ORDER BY `customer_id` DESC;";
 $customers = $wpdb->get_results( $getCustomersSQL, 'ARRAY_A' );
 

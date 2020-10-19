@@ -10,7 +10,7 @@
 
 function ottt_activate() {
     global $wpdb;
-    $customersTable = 'ottt_customers_220';
+    $customersTable = 'ottt_customers';
     $charset_collate = $wpdb->get_charset_collate();
     $createSQL = "CREATE TABLE IF NOT EXISTS `$customersTable` (
         customer_id int UNSIGNED NOT NULL AUTO_INCREMENT,
