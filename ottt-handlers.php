@@ -97,7 +97,6 @@ add_action( 'admin_post_nopriv_ottt_enroll_customer', 'ottt_enroll_customer_form
 add_action( 'admin_post_ottt_enroll_customer', 'ottt_enroll_customer_form_handler' );
 
 function ottt_activity_report_form_handler() {
-    error_log(print_r("Hello World",true));
     global $wpdb;
     $lookerTable = 'ottt_looker_report';
 
@@ -158,6 +157,8 @@ function ottt_activity_report_form_handler() {
     
                 }
             }
+
+            error_log(print_r("Hello World",true));
 
             $activityReportSQL = "SELECT DISTINCT c.ottt_customer_fname, c.ottt_customer_lname, c.ottt_customer_email, c.ottt_customer_source, a.user_id, a.video_id, a.title, a.platform, a.start_date, a.min_watched
             FROM `ottt_customers` c
