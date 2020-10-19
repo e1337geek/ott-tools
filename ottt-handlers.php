@@ -158,8 +158,6 @@ function ottt_activity_report_form_handler() {
                 }
             }
 
-            error_log(print_r("Hello World",true));
-
             $activityReportSQL = "SELECT DISTINCT c.ottt_customer_fname, c.ottt_customer_lname, c.ottt_customer_email, c.ottt_customer_source, a.user_id, a.video_id, a.title, a.platform, a.start_date, a.min_watched
             FROM `ottt_customers` c
             INNER JOIN `ottt_looker_report` a
@@ -170,7 +168,7 @@ function ottt_activity_report_form_handler() {
             $output = fopen('php://output', 'w');
             $result = $wpdb->get_results($activityReportSQL, ARRAY_A);
             fputcsv( $output, array('First Name', 'Last Name', 'Email', 'Source','User ID', 'Video ID', 'Video Title', 'Platform', 'Date', 'Min Watched'));
-            
+            error_log(print_r($result,true));
             foreach ( $result as $key => $value ) {
                 ottt_update_last_viewed( $value['ottt_customer_email'], $value['start_date'] );
                 $modified_values = array(
