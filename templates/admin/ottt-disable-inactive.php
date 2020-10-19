@@ -5,7 +5,7 @@ $customerTable = 'ottt_customers';
 $currentTimestamp = time();
 $gracePeriodSec = 2419200;
 $minLastViewed = $currentTimestamp - $gracePeriodSec;
-$getCustomersSQL = "SELECT * FROM `$customerTable` WHERE `ottt_customer_last_viewed` < $minLastViewed AND `ottt_customer_success` = 1 GROUP BY `ottt_customer_email` ORDER BY `ottt_customer_last_viewed` ASC;";
+$getCustomersSQL = "SELECT * FROM `$customerTable` WHERE `ottt_customer_last_viewed` < $minLastViewed AND `ottt_customer_success` = 1 AND `ottt_customer_disabled` IS NULL GROUP BY `ottt_customer_email` ORDER BY `ottt_customer_last_viewed` ASC;";
 $customers = $wpdb->get_results( $getCustomersSQL, 'ARRAY_A' );
 
 ?>
