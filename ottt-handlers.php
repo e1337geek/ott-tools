@@ -221,7 +221,7 @@ function ottt_disable_inactive_form_handler() {
     $sqlSelInactive = "SELECT * FROM `$customerTable` WHERE `ottt_customer_last_viewed` < $minLastViewed;";
     $customers = $wpdb->get_results( $sqlSelInactive, 'ARRAY_A' );
 
-    foreach ( $customer in $customers ) { 
+    foreach ( $customers as $customer ) { 
         $disableResult = ottt_disable_customer( $customer );
         if( $disableResult['response']['code'] === 200 || $disableResult['response']['code'] === 201 ) {
             $sqlUpdateDisabled = "UPDATE `$customerTable` SET `ottt_customer_disabled` = $currentTimestamp WHERE `ottt_customer_email` = '$customer_email'";
