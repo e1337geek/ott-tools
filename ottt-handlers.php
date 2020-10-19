@@ -237,7 +237,7 @@ add_action( 'admin_post_ottt_disable_inactive', 'ottt_disable_inactive_form_hand
 function ottt_disable_customer ( $customer ) {
 
     if ( $customer['ottt_vhx_customer_id'] ) {
-        $url = 'https://api.vhx.tv/customers/' . $customer['ott_customer_vhx_id'] . '/products';
+        $url = 'https://api.vhx.tv/customers/' . $customer['ottt_vhx_customer_id'] . '/products';
         $ott_response = wp_remote_post( $url, array(
             'method' => 'DELETE',
             'headers' => array(
@@ -247,7 +247,7 @@ function ottt_disable_customer ( $customer ) {
                 'product' => 'https://api.vhx.tv/products/' . get_option( 'ottt_product_id' ),
             ),
         ));
-        
+
         echo var_dump($ott_response);
         return $ott_response;
     } else {
