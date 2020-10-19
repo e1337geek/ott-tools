@@ -224,7 +224,7 @@ function ottt_disable_inactive_form_handler() {
     foreach ( $customers as $customer ) { 
 
         $disableResult = ottt_disable_customer( $customer );
-        var_dump($disableResult['body']);
+        var_dump($disableResult['response']);
         if( $disableResult['body']['response']['code'] === 200 || $disableResult['body']['response']['code'] === 201 ) {
             $sqlUpdateDisabled = "UPDATE `$customerTable` SET `ottt_customer_disabled` = $currentTimestamp WHERE `ottt_customer_email` = '$customer_email'";
             require_once ABSPATH . 'wp-admin/includes/upgrade.php';
