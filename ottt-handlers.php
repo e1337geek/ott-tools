@@ -168,7 +168,6 @@ function ottt_activity_report_form_handler() {
             $output = fopen('php://output', 'w');
             $result = $wpdb->get_results($activityReportSQL, ARRAY_A);
             fputcsv( $output, array('First Name', 'Last Name', 'Email', 'Source','User ID', 'Video ID', 'Video Title', 'Platform', 'Date', 'Min Watched'));
-            error_log(print_r($result,true));
             foreach ( $result as $key => $value ) {
                 ottt_update_last_viewed( $value['ottt_customer_email'], $value['start_date'] );
                 $modified_values = array(
@@ -209,6 +208,7 @@ function ottt_update_last_viewed ( $customer_email, $start_date ) {
     $sql = "UPDATE `$customersTable` SET `ottt_customer_last_viewed` = $formattedDate WHERE `ottt_customer_email` = '$customer_email' AND `ottt_customer_last_viewed` < $formattedDate;";
     require_once ABSPATH . 'wp-admin/includes/upgrade.php';
     dbDelta( $sql );
+    error_log(print_r($sql,true));
 }
 
 function ottt_disable_inactive_form_handler() {
