@@ -247,7 +247,8 @@ function ottt_disable_customer ( $customer ) {
                 'product' => 'https://api.vhx.tv/products/' . get_option( 'ottt_product_id' ),
             ),
         ));
-
+        
+        echo var_dump($ott_response);
         return $ott_response;
     } else {
         return false;
