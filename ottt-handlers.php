@@ -248,7 +248,7 @@ function ottt_disable_customer ( $customer ) {
         ));
 
         return $ott_response;
-    else {
+    } else {
         return false;
     }
 }
