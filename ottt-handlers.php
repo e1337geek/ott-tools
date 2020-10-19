@@ -236,7 +236,7 @@ add_action( 'admin_post_ottt_disable_inactive', 'ottt_disable_inactive_form_hand
 
 function ottt_disable_customer ( $customer ) {
 
-    if ( $customer['[ottt_vhx_customer_id'] ) {
+    if ( $customer['ottt_vhx_customer_id'] ) {
         $url = 'https://api.vhx.tv/customers/' . $customer['ott_customer_vhx_id'] . '/products';
         $ott_response = wp_remote_post( $url, array(
             'method' => 'DELETE',
