@@ -217,7 +217,7 @@ function ottt_disable_inactive_form_handler() {
     $currentTimestamp = time();
     $gracePeriodSec = 2419200;
     $minLastViewed = $currentTimestamp - $gracePeriodSec;
-    $sqlSelInactive = "SELECT * FROM `$customerTable` WHERE `ottt_customer_last_viewed` < $minLastViewed;";
+    $sqlSelInactive = "SELECT * FROM `$customerTable` WHERE `ottt_customer_last_viewed` < $minLastViewed AND `ottt_customer_success` = 1;";
     $customers = $wpdb->get_results( $sqlSelInactive, 'ARRAY_A' );
 
     foreach ( $customers as $customer ) { 
