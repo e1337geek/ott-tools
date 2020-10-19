@@ -200,6 +200,7 @@ function ottt_activity_report_form_handler() {
 
     }
 }
+add_action( 'admin_post_ottt_activity_report', 'ottt_activity_report_form_handler' );
 
 function ottt_update_last_viewed ( $customer_email, $start_date ) {
     global $wpdb;
@@ -210,7 +211,47 @@ function ottt_update_last_viewed ( $customer_email, $start_date ) {
     dbDelta( $sql );
 }
 
-add_action( 'admin_post_ottt_activity_report', 'ottt_activity_report_form_handler' );
+function ottt_disable_inactive_form_handler() {
+
+    global $wpdb;
+    $customerTable = "ottt_customers_220";
+    $currentTimestamp = time();
+    $gracePeriodSec = 2419200;
+    $minLastViewed = $currentTimestamp - $gracePeriodSec;
+    $sqlSelInactive = "SELECT * FROM `$customerTable` WHERE `ottt_customer_last_viewed` < $minLastViewed;";
+    $customers = $wpdb->get_results( $sqlSelInactive, 'ARRAY_A' );
+
+    foreach ( $customer in $customers ) { 
+        $disableResult = ottt_disable_customer( $customer );
+        if( $disableResult['response']['code'] === 200 || $disableResult['response']['code'] === 201 ) {
+            $sqlUpdateDisabled = "UPDATE `$customerTable` SET `ottt_customer_disabled` = $currentTimestamp WHERE `ottt_customer_email` = '$customer_email'";
+            require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+            dbDelta( $sqlUpdateDisabled );
+        }
+    }
+
+}
+add_action( 'admin_post_ottt_disable_inactive', 'ottt_disable_inactive_form_handler' );
+
+function ottt_disable_customer ( $customer ) {
+
+    if ( $customer['ott_customer_vhx_id'] ) {
+        $url = 'https://api.vhx.tv/customers/' . $customer['ott_customer_vhx_id'] . '/products';
+        $ott_response = wp_remote_post( $url, array(
+            'method' => 'DELETE',
+            'headers' => array(
+                'Authorization' => 'Basic ' . base64_encode( get_option( 'ottt_api_key' ) ),
+            ),
+            'body' => array(
+                'product' => 'https://api.vhx.tv/products/' . get_option( 'ottt_product_id' ),
+            ),
+        ));
+
+        return $ott_response;
+    else {
+        return false;
+    }
+}
 
 function ottt_get_customer_source( WP_REST_Request $request ) {
     global $wpdb;
