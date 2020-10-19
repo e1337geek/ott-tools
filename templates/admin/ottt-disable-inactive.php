@@ -6,7 +6,6 @@ $currentTimestamp = time();
 $gracePeriodSec = 2419200;
 $minLastViewed = $currentTimestamp - $gracePeriodSec;
 $getCustomersSQL = "SELECT * FROM `$customerTable` WHERE `ottt_customer_last_viewed` < $minLastViewed AND `ottt_customer_success` = 1 ORDER BY `ottt_customer_last_viewed` ASC;";
-echo var_dump($getCustomersSQL);
 $customers = $wpdb->get_results( $getCustomersSQL, 'ARRAY_A' );
 
 ?>
