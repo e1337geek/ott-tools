@@ -170,6 +170,7 @@ function ottt_activity_report_form_handler() {
             fputcsv( $output, array('First Name', 'Last Name', 'Email', 'Source','User ID', 'Video ID', 'Video Title', 'Platform', 'Date', 'Min Watched'));
             
             foreach ( $result as $key => $value ) {
+                error_log(print_r("Hello World",true));
                 ottt_update_last_viewed( $value['ottt_customer_email'], $value['start_date'] );
                 $modified_values = array(
                     $value['ottt_customer_fname'],
